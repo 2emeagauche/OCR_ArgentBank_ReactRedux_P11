@@ -2,9 +2,9 @@ import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Signin from './pages/Signin';
-import User from './pages/User';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 
 import './App.css';
 
@@ -13,9 +13,9 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route exact path="/" element={<Home />} ></Route>
-        <Route exact path="/signin" element={<Signin />} ></Route>
-        <Route exact path="/user" element={<User />} ></Route>
+        <Route exact path="/" element={<HomePage />} ></Route>
+        <Route exact path="/login" element={<LoginPage />} ></Route>
+        <Route exact path="/profile" element={<ProfilePage />} ></Route>
       </Routes>
       <Footer />
     </Router>

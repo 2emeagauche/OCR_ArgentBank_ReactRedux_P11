@@ -2,7 +2,7 @@ import iconChatImgSrc from '../assets/images/icon-chat.png'
 import iconMoneyImgSrc from '../assets/images/icon-money.png'
 import iconSecurityImgSrc from '../assets/images/icon-security.png'
 
-const Home = () => {
+const HomePage = () => {
   return (
     <main>
       <div className="hero">
@@ -52,4 +52,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

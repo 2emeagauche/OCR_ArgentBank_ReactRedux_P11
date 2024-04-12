@@ -1,4 +1,4 @@
-const Signin = () => {
+const LoginPage = () => {
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
@@ -24,4 +24,4 @@ const Signin = () => {
   )
 }
 
-export default Signin
+export default LoginPage

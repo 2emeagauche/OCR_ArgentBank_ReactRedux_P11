@@ -1,4 +1,4 @@
-const User = () => {
+const ProfilePage = () => {
   return (
     <main className="main bg-dark">
       <div className="header">
@@ -40,4 +40,4 @@ const User = () => {
   )
 }
 
-export default User
+export default ProfilePage
