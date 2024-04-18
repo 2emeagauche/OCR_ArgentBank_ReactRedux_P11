@@ -17,18 +17,22 @@ const Header = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       {
+
         userName ? 
+
         <div>
           <Link className="main-nav-item" to="/profile">
-            <i class="fa fa-user-circle"></i>
+            <i className="fa fa-user-circle"></i>
             {userName}
           </Link>
           <Link className="main-nav-item" to="/">
-            <i class="fa fa-sign-out"></i>
+            <i className="fa fa-sign-out"></i>
             Sign Out
           </Link>
         </div>
+
         :
+        
         <div>
           <Link to="/login" className="main-nav-item">
             <i className="fa fa-user-circle"></i>

@@ -25,9 +25,6 @@ const loginSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-    .addCase(fetchLogin.pending, (state, action) => {
-      state.status = "loading"
-    })
     .addCase(fetchLogin.fulfilled, (state, action) => {
       state.status = "succeeded"
       state.apiStatus = action.payload.status
@@ -37,11 +34,6 @@ const loginSlice = createSlice({
         state.error = null
         state.token = action.payload.body.token
       }
-    })
-    .addCase(fetchLogin.rejected, (state, action) => {
-      state.status = "failed"
-      console.log(action)
-      state.error = action.error.message
     })
   }
 })

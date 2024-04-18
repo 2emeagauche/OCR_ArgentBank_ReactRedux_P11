@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import { fetchLogin } from './loginSlice'
 import { fetchProfile } from '../profile/profileSlice'
 import Spinner from '../../components/Spinner';
@@ -16,13 +17,38 @@ const Login = () => {
 
   const dispatch = useDispatch()
 
-  const handleLogin = (e) => {
+  const navigate = useNavigate()
+
+  const canLogin =
+    [loginEmail, loginPassword].every(Boolean) && loginStatus === 'idle'
+
+  const onLoginSubmited = async (e) => {
     e.preventDefault()
-    dispatch(fetchLogin(JSON.stringify({"email": loginEmail, "password": loginPassword})))
+    if(canLogin) {
+      try{
+        await dispatch(fetchLogin(JSON.stringify({"email": loginEmail, "password": loginPassword}))).unwrap()
+      } catch(err) {
+        console.error('Failed to login: ', err)
+      }
+    }
   }
+  
+  useEffect(() => {
+    const grabProfile = async () => {
+    if (loginApiStatus === 200) {
+      try{
+        await dispatch(fetchProfile(bearerToken)).unwrap
+        navigate('/profile')
+      }
+      catch(err){
+        console.log(err)
+      }
+    }}
+    grabProfile()
+  }, [dispatch, navigate, bearerToken, loginApiStatus])
 
   let content = <>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={onLoginSubmited}>
         <div className="input-wrapper">
           <label htmlFor="username">Username</label>
           <input type="text" id="username" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
@@ -42,10 +68,6 @@ const Login = () => {
 
   if(loginStatus === 'loading') {
     content = <Spinner text="Loading..." />
-  }
-  if (loginApiStatus === 200) {
-    dispatch(fetchProfile(bearerToken))
-    content = <p>Login successful. Doit envoyer un dispatch fetchProfile avec le token</p>
   }
   
   return (
