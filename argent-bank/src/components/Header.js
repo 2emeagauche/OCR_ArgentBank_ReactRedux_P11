@@ -1,10 +1,20 @@
 import mainNavLogoImg from '../assets/images/argentBankLogo.png'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { resetProfile } from '../features/profile/profileSlice'
+import { resetLogin } from '../features/login/loginSlice'
 
 const Header = () => {
 
   const {userName} = useSelector(state => state.profile)
+
+  const dispatch = useDispatch()
+
+  const signingOut = () => {
+    dispatch(resetProfile())
+    dispatch(resetLogin())
+  }
 
   return(
     <nav className="main-nav">
@@ -23,12 +33,12 @@ const Header = () => {
         <div>
           <Link className="main-nav-item" to="/profile">
             <i className="fa fa-user-circle"></i>
-            {userName}
+            <span>&nbsp;{userName}</span>
           </Link>
-          <Link className="main-nav-item" to="/">
+          <button className="main-nav-item" onClick={signingOut}>
             <i className="fa fa-sign-out"></i>
             Sign Out
-          </Link>
+          </button>
         </div>
 
         :

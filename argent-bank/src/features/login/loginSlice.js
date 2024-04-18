@@ -22,7 +22,14 @@ export const fetchLogin = createAsyncThunk('login/fetchLogin', async (submission
 const loginSlice = createSlice({
   name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    resetLogin: (state) => {
+      state.token = ''
+      state.status = 'idle'
+      state.apiStatus = null
+      state.error = null
+    }
+  },
   extraReducers(builder) {
     builder
     .addCase(fetchLogin.fulfilled, (state, action) => {
@@ -37,5 +44,7 @@ const loginSlice = createSlice({
     })
   }
 })
+
+export const {resetLogin} = loginSlice.actions
 
 export default loginSlice.reducer
