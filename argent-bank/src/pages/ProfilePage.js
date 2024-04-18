@@ -5,7 +5,9 @@ const ProfilePage = () => {
   return (
     <main className="main bg-dark">
       <div className="header">
-        <Profile />
+        <section className="sign-in-content">
+          <Profile />
+        </section>
       </div>
       <h2 className="sr-only">Accounts</h2>
       <AccountSlot acountType="Checking" accountTrailingId="8349" accountAmount="2,082.79" balanceType="Available" />

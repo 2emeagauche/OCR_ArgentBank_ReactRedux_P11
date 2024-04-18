@@ -49,8 +49,8 @@ const Login = () => {
   let content = <>
       <form onSubmit={onLoginSubmited}>
         <div className="input-wrapper">
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
+          <label htmlFor="email">Email</label>
+          <input type="text" id="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
         </div>
         <div className="input-wrapper">
           <label htmlFor="password">Password</label>
@@ -62,7 +62,7 @@ const Login = () => {
         </div>
         <button className="sign-in-button" type='submit'>Sign In</button>
       </form>
-      {errorMessage?<p>{errorMessage}</p>:<></>}
+      {errorMessage?<p>{errorMessage}</p>:null}
     </>
 
   if(loginStatus === 'loading') {
