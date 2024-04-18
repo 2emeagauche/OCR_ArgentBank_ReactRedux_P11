@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { fetchLogin } from './loginSlice'
 import { fetchProfile } from '../profile/profileSlice'
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/Spinner'
 
 const Login = () => {
 
@@ -16,8 +16,7 @@ const Login = () => {
   const bearerToken = useSelector(state => state.login.token)
 
   const dispatch = useDispatch()
-
-  const navigate = useNavigate()
+  const navigate= useNavigate()
 
   const canLogin =
     [loginEmail, loginPassword].every(Boolean) && loginStatus === 'idle'
