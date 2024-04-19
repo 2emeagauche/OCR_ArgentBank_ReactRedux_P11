@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { fetchLogin } from './loginSlice'
 import { fetchProfile } from '../profile/profileSlice'
 import Spinner from '../../components/Spinner'
+import InputBlock from '../../components/InputBlock'
 
 const Login = () => {
 
@@ -48,18 +49,33 @@ const Login = () => {
 
   let content = <>
       <form onSubmit={onLoginSubmited}>
-        <div className="input-wrapper">
-          <label htmlFor="email">Email</label>
-          <input type="text" id="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
-        </div>
-        <div className="input-wrapper">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
-        </div>
-        <div className="input-remember">
-          <input type="checkbox" id="remember-me" />
-          <label htmlFor="remember-me">Remember me</label>
-        </div>
+        <InputBlock
+          classes="input-wrapper"
+          type="text"
+          id="email"
+          label="Email"
+          val={loginEmail}
+          disabled={false}
+          onChange={(e) => setLoginEmail(e.target.value)}
+          />
+        <InputBlock
+          classes="input-wrapper"
+          type="password"
+          id="password"
+          label="Password"
+          val={loginPassword}
+          disabled={false}
+          onChange={(e) => setLoginPassword(e.target.value)}
+          />
+        <InputBlock
+          classes="input-remember"
+          type="checkbox"
+          id="remember-me"
+          label="Remember me"
+          val=""
+          disabled={false}
+          onChange={()=>{}}
+        />
         <button className="sign-in-button" type='submit'>Sign In</button>
       </form>
       {errorMessage?<p>{errorMessage}</p>:null}

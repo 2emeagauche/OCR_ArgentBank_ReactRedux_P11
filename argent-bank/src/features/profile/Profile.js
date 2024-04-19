@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import InputBlock from '../../components/InputBlock'
 
 const Profile = () => {
 
@@ -16,18 +17,33 @@ const Profile = () => {
         <>
           <h1>Edit user info</h1>
           <form>
-            <div className="input-wrapper">
-              <label htmlFor="username">User name:</label>
-              <input type="text" id="username" value={profileUserName} onChange={(e) => setProfileUserName(e.target.value)} />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="firstname">First name</label>
-              <input type="text" id="firstname" value={firstName} disabled />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="lastname">Last name</label>
-              <input type="text" id="lastname" value={lastName} disabled />
-            </div>
+            <InputBlock
+              classes="input-wrapper"
+              type="text"
+              id="username"
+              label="User name:"
+              val={profileUserName}
+              disabled={false}
+              onChange={(e) => setProfileUserName(e.target.value)}
+            />
+            <InputBlock
+              classes="input-wrapper"
+              type="text"
+              id="firstname"
+              label="First name:"
+              val={firstName}
+              disabled={true}
+              onChange={() => {}}
+            />
+            <InputBlock
+              classes="input-wrapper"
+              type="text"
+              id="lastname"
+              label="Last name:"
+              val={lastName}
+              disabled={true}
+              onChange={() => {}}
+            />
           </form>
         </>
       :
