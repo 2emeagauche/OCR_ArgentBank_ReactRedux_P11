@@ -7,7 +7,7 @@ const Profile = () => {
   const {userName, firstName, lastName} = useSelector(state =>state.profile)
 
   const [isEditMode, setIsEditMode] = useState(false)
-  const [profileUserName, setProfileUserName] = useState(userName)
+  const [profileUserName, setProfileUserName] = useState("")
 
 
   return (
@@ -23,6 +23,7 @@ const Profile = () => {
               id="username"
               label="User name:"
               val={profileUserName}
+              placeholder={`Change "${userName}" to ?`}
               disabled={false}
               onChange={(e) => setProfileUserName(e.target.value)}
             />
@@ -44,6 +45,13 @@ const Profile = () => {
               disabled={true}
               onChange={() => {}}
             />
+            <div className="in-row">
+              <button className="edit-button" type="submit" onClick={() => {}}>Submit</button>
+              <button className="edit-button" onClick={() => {
+                setProfileUserName("")
+                setIsEditMode(false)
+              }}>Cancel</button>
+            </div>
           </form>
         </>
       :

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { resetProfile } from '../features/profile/profileSlice'
-import { resetLogin } from '../features/login/loginSlice'
+import { resetLogin, nukeToken } from '../features/login/loginSlice'
 
 const Header = () => {
 
@@ -14,6 +14,7 @@ const Header = () => {
   const signingOut = () => {
     dispatch(resetProfile())
     dispatch(resetLogin())
+    dispatch(nukeToken())
   }
 
   return(

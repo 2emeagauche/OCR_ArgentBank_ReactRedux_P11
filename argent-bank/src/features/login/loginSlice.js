@@ -24,27 +24,36 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     resetLogin: (state) => {
-      state.token = ''
       state.status = 'idle'
       state.apiStatus = null
       state.error = null
+    },
+    nukeToken: (state) => {
+      state.token = ''
     }
   },
   extraReducers(builder) {
     builder
+    .addCase(fetchLogin.pending, (state, action) => {
+      state.status = 'loading'
+    })
     .addCase(fetchLogin.fulfilled, (state, action) => {
       state.status = "succeeded"
       state.apiStatus = action.payload.status
-      if(action.payload.status === 400) {
+      if(state.apiStatus === 400) {
         state.error = action.payload.message
-      } else if(action.payload.status === 200) {
+      } else if(state.apiStatus === 200) {
         state.error = null
         state.token = action.payload.body.token
       }
     })
+    .addCase(fetchLogin.rejected, (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    })
   }
 })
 
-export const {resetLogin} = loginSlice.actions
+export const {resetLogin, nukeToken} = loginSlice.actions
 
 export default loginSlice.reducer

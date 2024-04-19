@@ -5,7 +5,7 @@ const ProfilePage = () => {
   return (
     <main className="main bg-dark">
       <div className="header">
-        <section className="sign-in-content">
+        <section className="edit-profile-content">
           <Profile />
         </section>
       </div>
