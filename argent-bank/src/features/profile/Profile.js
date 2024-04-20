@@ -2,26 +2,27 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserName } from './profileSlice'
 import InputBlock from '../../components/InputBlock'
-import Spinner from '../../components/Spinner'
 
 const Profile = () => {
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [profileUserName, setProfileUserName] = useState("")
 
-  const {userName, firstName, lastName, status, apiStatus, error} = useSelector(state =>state.profile)
+  const {userName, firstName, lastName, status} = useSelector(state =>state.profile)
   const bearerToken = useSelector(state => state.login.token)
   
   const dispatch = useDispatch()
 
+  const canUpdate = profileUserName && status !== 'loading'
+
   const onUserNameChangeSubmited = async (e) => {
     e.preventDefault()
-    try{
-      await dispatch(fetchUserName([bearerToken, profileUserName])).unwrap()
-    } catch(err) {
-      console.error('Failed to login: ', err)
-    }
-    finally{
+    if(canUpdate) {
+      try{
+        await dispatch(fetchUserName([bearerToken, profileUserName])).unwrap()
+      } catch(err) {
+        console.error('Failed to login: ', err)
+      }
     }
   }
 
