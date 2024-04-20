@@ -216,6 +216,10 @@ body, #root {
   font-style: italic;
 }
 
+.error{
+  color: red;
+}
+
 .footer {
   display: flex;
   justify-content: center;

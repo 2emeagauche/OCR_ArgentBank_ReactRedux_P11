@@ -10,6 +10,7 @@ const Login = () => {
 
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
 
   const loginStatus = useSelector(state => state.login.status)
   const profileStatus = useSelector(state => state.profile.status)
@@ -20,7 +21,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate= useNavigate()
 
-  const canLogin = [loginEmail, loginPassword].every(Boolean) && loginStatus === 'idle'
+  const canLogin = [loginEmail, loginPassword].every(Boolean) && loginStatus !== 'loading'
   
   const onLoginSubmited = async (e) => {
     e.preventDefault()
@@ -28,27 +29,29 @@ const Login = () => {
       try{
         await dispatch(fetchLogin(JSON.stringify({"email": loginEmail, "password": loginPassword}))).unwrap()
       } catch(err) {
-        console.error('Failed to login: ', err)
-      }
-      finally{
-        dispatch(resetLogin())
+        setLoginError('Failed to login: ', err)
       }
     }
   }
   
   useEffect(() => {
-    const grabProfile = async () => {
+    console.log(errorMessage)
     if (loginApiStatus === 200) {
-      try{
-        await dispatch(fetchProfile(bearerToken)).unwrap()
-        navigate('/profile')
+      const grabProfile = async () => {
+        dispatch(resetLogin())
+        try{
+          await dispatch(fetchProfile(bearerToken)).unwrap()
+          navigate('/profile')
+        }
+        catch(err){
+          setLoginError(err)
+        }
       }
-      catch(err){
-        console.log(err)
-      }
-    }}
-    grabProfile()
-  }, [dispatch, navigate, bearerToken, loginApiStatus])
+      grabProfile()
+    } else {
+      setLoginError(errorMessage)
+    }
+  }, [dispatch, navigate, bearerToken, loginApiStatus, errorMessage])
 
   
   return (
@@ -57,39 +60,43 @@ const Login = () => {
         (loginStatus === 'loading' || profileStatus === 'loading') ?
           <Spinner text="Loading..." />
         :
-        <form onSubmit={onLoginSubmited}>
-          <InputBlock
-            classes="input-wrapper"
-            type="text"
-            id="email"
-            label="Email"
-            val={loginEmail}
-            disabled={false}
-            onChange={(e) => setLoginEmail(e.target.value)}
+        <>
+          <form onSubmit={onLoginSubmited}>
+            <InputBlock
+              classes="input-wrapper"
+              type="text"
+              id="email"
+              label="Email"
+              val={loginEmail}
+              disabled={false}
+              onChange={(e) => setLoginEmail(e.target.value)}
+              />
+            <InputBlock
+              classes="input-wrapper"
+              type="password"
+              id="password"
+              label="Password"
+              val={loginPassword}
+              disabled={false}
+              onChange={(e) => setLoginPassword(e.target.value)}
+              />
+            <InputBlock
+              classes="input-remember"
+              type="checkbox"
+              id="remember-me"
+              label="Remember me"
+              val=""
+              disabled={false}
+              onChange={()=>{}}
             />
-          <InputBlock
-            classes="input-wrapper"
-            type="password"
-            id="password"
-            label="Password"
-            val={loginPassword}
-            disabled={false}
-            onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          <InputBlock
-            classes="input-remember"
-            type="checkbox"
-            id="remember-me"
-            label="Remember me"
-            val=""
-            disabled={false}
-            onChange={()=>{}}
-          />
-          <button className="sign-in-button" type='submit'>Sign In</button>
-        </form>
-      }
-      {
-        errorMessage ? <p>{errorMessage}</p> : null
+            <button className="sign-in-button" type='submit'>Sign In</button>
+          </form>
+          <>
+          {
+          loginError ? <p className='error'>{loginError}</p> : null
+          }
+          </>
+        </>
       }
     </>
   )
