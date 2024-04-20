@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserName } from './updateUserNameSlice'
+import { fetchUserName } from './profileSlice'
 import InputBlock from '../../components/InputBlock'
 import Spinner from '../../components/Spinner'
 
@@ -9,11 +9,8 @@ const Profile = () => {
   const [isEditMode, setIsEditMode] = useState(false)
   const [profileUserName, setProfileUserName] = useState("")
 
-  const {userName, firstName, lastName} = useSelector(state =>state.profile)
+  const {userName, firstName, lastName, status, apiStatus, error} = useSelector(state =>state.profile)
   const bearerToken = useSelector(state => state.login.token)
-  const status = useSelector(state => state.username.status)
-  const apiStatus = useSelector(state => state.username.apiStatus)
-  const errorMessage = useSelector(state => state.username.error)
   
   const dispatch = useDispatch()
 
