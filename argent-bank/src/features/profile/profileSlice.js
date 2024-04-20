@@ -9,9 +9,9 @@ const initialState = {
   error: null
 }
 
-export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (submission) => {
+export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (token) => {
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${submission}`);
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const response = await fetch("http://localhost:3001/api/v1/user/profile", {
     method: "POST",
     headers: myHeaders,
@@ -35,24 +35,25 @@ const profileSlice = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addCase(fetchProfile.pending, (state, action) => {
-      state.status = "loading"
-    })
-    builder.addCase(fetchProfile.fulfilled, (state, action) => {
-      state.status = "succeeded"
-      state.apiStatus = action.payload.status
-      if(action.payload.status === 400) {
-        state.error = action.payload.message
-      } else if(action.payload.status === 200) {
-        state.error = null
-        state.firstName = action.payload.body.firstName
-        state.lastName = action.payload.body.lastName
-        state.userName = action.payload.body.userName
-      }
-    })
-    builder.addCase(fetchProfile.rejected, (state, action) => {
-      state.status = "failed"
-    })
+    builder
+      .addCase(fetchProfile.pending, (state, action) => {
+        state.status = "loading"
+      })
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.status = "succeeded"
+        state.apiStatus = action.payload.status
+        if(action.payload.status === 400) {
+          state.error = action.payload.message
+        } else if(action.payload.status === 200) {
+          state.error = null
+          state.firstName = action.payload.body.firstName
+          state.lastName = action.payload.body.lastName
+          state.userName = action.payload.body.userName
+        }
+      })
+      .addCase(fetchProfile.rejected, (state, action) => {
+        state.status = "failed"
+      })
   }
 })
 
