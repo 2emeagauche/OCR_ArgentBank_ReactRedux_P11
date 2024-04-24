@@ -20,8 +20,7 @@ const Login = () => {
   
   const dispatch = useDispatch()
   const navigate= useNavigate()
-
-  const canLogin = [loginEmail, loginPassword].every(Boolean) && loginStatus !== 'loading'
+  const canLogin = loginEmail !== '' && loginPassword !== '' && loginStatus !== 'loading'
   
   const onLoginSubmited = async (e) => {
     e.preventDefault()
@@ -35,12 +34,12 @@ const Login = () => {
   }
   
   useEffect(() => {
-    console.log(errorMessage)
+    console.log(loginStatus)
     if (loginApiStatus === 200) {
       const grabProfile = async () => {
-        dispatch(resetLogin())
         try{
           await dispatch(fetchProfile(bearerToken)).unwrap()
+          dispatch(resetLogin())
           navigate('/profile')
         }
         catch(err){
@@ -70,6 +69,7 @@ const Login = () => {
               val={loginEmail}
               disabled={false}
               onChange={(e) => setLoginEmail(e.target.value)}
+              onFocus={(e) => setLoginError('')}
               />
             <InputBlock
               classes="input-wrapper"
@@ -79,6 +79,7 @@ const Login = () => {
               val={loginPassword}
               disabled={false}
               onChange={(e) => setLoginPassword(e.target.value)}
+              onFocus={(e) => setLoginError('')}
               />
             <InputBlock
               classes="input-remember"
@@ -89,7 +90,7 @@ const Login = () => {
               disabled={false}
               onChange={()=>{}}
             />
-            <button className="sign-in-button" type='submit'>Sign In</button>
+            <button className="sign-in-button" type='submit' disabled={!canLogin}>Sign In</button>
           </form>
           <>
           {
