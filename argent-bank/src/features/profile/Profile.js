@@ -62,7 +62,7 @@ const Profile = () => {
               onChange={() => {}}
             />
             <div className="in-row">
-              <button className="edit-button" type="submit" onClick={() => {}}>Submit</button>
+              <button className="edit-button" type="submit" onClick={() => {}} disabled={!canUpdate}>Submit</button>
               <button className="edit-button" onClick={() => {
                 setProfileUserName("")
                 setIsEditMode(false)

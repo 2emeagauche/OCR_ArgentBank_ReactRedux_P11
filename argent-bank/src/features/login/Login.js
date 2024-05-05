@@ -34,7 +34,6 @@ const Login = () => {
   }
   
   useEffect(() => {
-    console.log(loginStatus)
     if (loginApiStatus === 200) {
       const grabProfile = async () => {
         try{

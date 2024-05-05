@@ -169,6 +169,10 @@ body, #root {
   color: #fff;
 }
 
+.sign-in-button:disabled {
+  opacity: 0.5;
+}
+
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
@@ -286,6 +290,10 @@ body, #root {
   color: #fff;
   font-weight: bold;
   padding: 10px;
+}
+
+.edit-button:disabled {
+  opacity: 0.5;
 }
 
 .header {
