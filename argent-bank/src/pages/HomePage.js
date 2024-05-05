@@ -1,6 +1,6 @@
-import iconChatImgSrc from '../assets/images/icon-chat.png'
-import iconMoneyImgSrc from '../assets/images/icon-money.png'
-import iconSecurityImgSrc from '../assets/images/icon-security.png'
+import iconChatImgSrc from '../assets/images/icon-chat.svg'
+import iconMoneyImgSrc from '../assets/images/icon-money.svg'
+import iconSecurityImgSrc from '../assets/images/icon-security.svg'
 import FeatureItem from '../components/FeatureItem'
 
 const HomePage = () => {

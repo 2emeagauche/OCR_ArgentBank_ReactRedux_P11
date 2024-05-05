@@ -1,4 +1,4 @@
-import mainNavLogoImg from '../assets/images/argentBankLogo.png'
+import mainNavLogoImg from '../assets/images/argentBankLogo.webp'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
