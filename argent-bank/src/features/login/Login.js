@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { fetchLogin, resetLogin } from './loginSlice'
+import { fetchLogin, resetLogin, settingPersist } from './loginSlice'
 import { fetchProfile } from '../profile/profileSlice'
 import Spinner from '../../components/Spinner'
 import InputBlock from '../../components/InputBlock'
@@ -31,6 +31,10 @@ const Login = () => {
         setLoginError('Failed to login: ', err)
       }
     }
+  }
+  
+  const remember = (e) => {
+    dispatch(settingPersist(e.target.checked))
   }
   
   useEffect(() => {
@@ -87,7 +91,7 @@ const Login = () => {
               label="Remember me"
               val=""
               disabled={false}
-              onChange={()=>{}}
+              onChange={(e) => remember(e)}
             />
             <button className="sign-in-button" type='submit' disabled={!canLogin}>Sign In</button>
           </form>

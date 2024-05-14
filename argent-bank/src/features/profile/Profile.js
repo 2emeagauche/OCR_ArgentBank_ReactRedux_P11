@@ -10,6 +10,14 @@ const Profile = () => {
 
   const {userName, firstName, lastName, status} = useSelector(state =>state.profile)
   const bearerToken = useSelector(state => state.login.token)
+  const persistState = useSelector(state => state.login.persist)
+
+  if(persistState) {
+    localStorage.setItem('token', bearerToken)
+    localStorage.setItem('firstName', firstName)
+    localStorage.setItem('lastName', lastName)
+    localStorage.setItem('userName', userName)
+  }
   
   const dispatch = useDispatch()
 
@@ -20,6 +28,9 @@ const Profile = () => {
     if(canUpdate) {
       try{
         await dispatch(fetchUserName([bearerToken, profileUserName])).unwrap()
+        if(localStorage.getItem('token')) {
+          localStorage.setItem('userName', profileUserName)
+        }
       } catch(err) {
         console.error('Failed to login: ', err)
       }

@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { resetProfile } from '../features/profile/profileSlice'
-import { resetLogin, nukeToken } from '../features/login/loginSlice'
+import { resetLogin, nukeToken, settingPersist } from '../features/login/loginSlice'
 
 const Header = () => {
 
   const {userName} = useSelector(state => state.profile)
+  const bearerToken = useSelector(state => state.login.token)
 
   const dispatch = useDispatch()
 
@@ -15,6 +16,8 @@ const Header = () => {
     dispatch(resetProfile())
     dispatch(resetLogin())
     dispatch(nukeToken())
+    dispatch(settingPersist(false))
+    localStorage.clear()
   }
 
   return(
@@ -29,7 +32,7 @@ const Header = () => {
       </Link>
       {
 
-        userName ? 
+        bearerToken ? 
 
         <div>
           <Link className="main-nav-item" to="/profile">

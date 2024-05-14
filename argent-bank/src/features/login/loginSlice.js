@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
-  token: '',
+  token: '' || localStorage.getItem('token'),
+  persist: false,
   status: 'idle',
   apiStatus: null,
   error: null
@@ -23,6 +24,9 @@ const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
+    settingPersist: (state, action) => {
+      state.persist = action.payload
+    },
     resetLogin: (state) => {
       state.status = 'idle'
       state.apiStatus = null
@@ -54,6 +58,6 @@ const loginSlice = createSlice({
   }
 })
 
-export const {resetLogin, nukeToken} = loginSlice.actions
+export const {settingPersist, resetLogin, nukeToken} = loginSlice.actions
 
 export default loginSlice.reducer

@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
-  firstName: '',
-  lastName: '',
-  userName: '',
+  firstName: '' || localStorage.getItem('firstName'),
+  lastName: '' || localStorage.getItem('lastName'),
+  userName: '' || localStorage.getItem('userName'),
   status: 'idle',
   apiStatus: null,
   error: null
@@ -79,7 +79,6 @@ const profileSlice = createSlice({
       })
       .addCase(fetchUserName.fulfilled, (state, action) => {
         state.status = "succeeded"
-        console.log(action.payload)
         state.apiStatus = action.payload.status
         if(action.payload.status === 400) {
           state.error = action.payload.message
