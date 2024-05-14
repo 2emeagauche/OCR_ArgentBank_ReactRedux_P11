@@ -17,7 +17,7 @@ const Login = () => {
   const loginApiStatus = useSelector(state => state.login.apiStatus)
   const errorMessage = useSelector(state => state.login.error)
   const bearerToken = useSelector(state => state.login.token)
-  
+
   const dispatch = useDispatch()
   const navigate= useNavigate()
   const canLogin = loginEmail !== '' && loginPassword !== '' && loginStatus !== 'loading'
@@ -36,6 +36,12 @@ const Login = () => {
   const remember = (e) => {
     dispatch(settingPersist(e.target.checked))
   }
+
+  useEffect(() => {
+    if(!!bearerToken) {
+      navigate('/profile')
+    }
+  }, [navigate, bearerToken])
   
   useEffect(() => {
     if (loginApiStatus === 200) {
